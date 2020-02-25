@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Adopt a Cat</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <script src="script.js">
+    </script>
+</head>
+
+<body>
+    <h1>HELLO THIS IS CAT</h1>
+    <section id="cats"></section>
+    <form id="catForm" action="/postCat" method="post">
+        <label for="name">Name: </label>
+        <input id="nameField" type="text" name="name" />
+        <label for="age">Age: </label>
+        <input id="ageField" type="number" />
+        <label for="breed">Breed: </label>
+        <input id="breedField" type="text" />
+        <label for="img">Image Link: </label>
+        <input id="imgField" type="text" />
+        <input type="submit" value="Post Cat" />
+    </form>
+    <br>
+    <section id="content">
+    </section>
+</body>
+
+</html>
