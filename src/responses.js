@@ -35,6 +35,10 @@ const getCats = (request, response) => {
     response.end();
 };
 
+const getCatsMeta = (request, response) => {
+    return respondJSONMeta(request, response, 200);
+}
+
 const postCat = (request, response, body) => {
     let statusCode;
     const responseJSON = {
@@ -60,17 +64,17 @@ const postCat = (request, response, body) => {
     cats[body.name].age = body.age;
     cats[body.name].breed = body.breed;
     cats[body.name].img = body.img;
+    cats[body.name].comments = {};
 
-    cats.push({
-        name: body.name,
-        age: body.age,
-        breed: body.breed,
-        img: body.img
-    });
+    //    cats.push({
+    //        name: body.name,
+    //        age: body.age,
+    //        breed: body.breed,
+    //        img: body.img
+    //    });
 
     const keys = Object.values(cats);
     console.log(keys);
-    console.log(cats[body.name].name);
     console.log("cats length: " + cats.length);
 
     //send created message that we created new cat
