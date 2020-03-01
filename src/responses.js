@@ -1,5 +1,5 @@
 const fs = require('fs');
-let cats;
+let cats, catFile;
 
 const respond = (request, response, statusCode, content) => {
     response.writeHead(statusCode, {
@@ -42,7 +42,7 @@ const getCatsMeta = (request, response) => {
 const postCat = (request, response, body) => {
     let statusCode;
     const responseJSON = {
-        message: 'Breed, name, and age are required',
+        message: 'Breed, name, age, and image url are required',
     };
     if (!body.name || !body.age || !body.breed || !body.img) {
         statusCode = 400;
@@ -55,31 +55,49 @@ const postCat = (request, response, body) => {
     //if there already is a cat with that name, update it
     if (cats[body.name]) {
         statusCode = 204;
-    } else {
-        console.log('creating new cat');
-        cats[body.name] = {};
-    }
-    //set the new cat data
-    cats[body.name].name = body.name;
-    cats[body.name].age = body.age;
-    cats[body.name].breed = body.breed;
-    cats[body.name].img = body.img;
-    cats[body.name].comments = {};
+        console.log(`age: ${body.age}, breed: ${body.breed}, img: ${body.img}`);
+        cats[body.name].age = body.age;
+        cats[body.name].breed = body.breed;
+        cats[body.name].img = body.img;
+        cats[body.name].comments = "I hate this";
 
-    //    cats.push({
-    //        name: body.name,
-    //        age: body.age,
-    //        breed: body.breed,
-    //        img: body.img
-    //    });
+    } else {
+        cats[body.name] = {};
+
+        //set the new cat data
+        cats[body.name].name = body.name;
+        cats[body.name].age = body.age;
+        cats[body.name].breed = body.breed;
+        cats[body.name].img = body.img;
+        cats[body.name].comments = {};
+
+        cats.push[body.name];
+
+        //        let jsonToPush = JSON.stringify(cats[body.name]);
+        //        fs.appendFile(`${__dirname}/cats.json`, jsonToPush, 'utf8', function (err) {
+        //            if (err) throw err;
+        //            console.log("replaced");
+        //        });
+
+        cats.push({
+            name: body.name,
+            age: body.age,
+            breed: body.breed,
+            img: body.img,
+            comments: {}
+        });
+    }
 
     const keys = Object.values(cats);
     console.log(keys);
-    console.log("cats length: " + cats.length);
 
     //send created message that we created new cat
     if (statusCode === 201) {
         responseJSON.message = 'Created Successfully';
+        response.writeHead(statusCode, {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+        })
         return respond(request, response, statusCode, JSON.stringify(responseJSON));
     }
     //empty meta response for if it's just updated
@@ -87,14 +105,15 @@ const postCat = (request, response, body) => {
 }
 
 let init = () => {
-    const catFile = fs.readFileSync(`${__dirname}/cats.json`);
+    catFile = fs.readFileSync(`${__dirname}/cats.json`);
     cats = JSON.parse(catFile).cats;
 }
 
 init();
 
-module.exports = {
+module.exports = { //exporting catFile here
     notFound,
     getCats,
     postCat,
+    catFile,
 };

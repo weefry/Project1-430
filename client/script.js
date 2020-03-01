@@ -1,19 +1,6 @@
-//                window.onload = () => {
-// let path = "/getCats";
-// const xhr = new XMLHttpRequest();
-// xhr.onload = (e) => {
-// let cat = JSON.parse(e.target.response);
-// console.log("name:" + cat.name);
-// console.log("breed:" + cat.breed);
-// console.log("age:" + cat.age);
-// content.innerHTML += `<h1><b>${cat.name}</b></h1>`;
-// content.innerHTML += `<p>Age: ${cat.age}, Breed: ${cat.breed}</p>`;
-// content.innerHTML += `<img src="${cat.img}">`;
-// xhr.open('GET', path);
-// xhr.send();
-// };
-// };
-
+//const fs = require('fs'); //require is not defined
+//import catFile from '../src/responses.js'; //can't find file with this
+let cats;
 const parseJSON = (xhr, content) => {
     const obj = JSON.parse(xhr.response);
 }
@@ -38,6 +25,60 @@ const handleResponse = (xhr) => {
             content.innerHTML = `Error code not implemented by client.`;
             break;
     }
+}
+
+const displayCats = () => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', 'getCats');
+    xhr.responseType = 'json';
+    xhr.onload = function () {
+        cats = xhr.response;
+        for (let i = 0, length = cats.length; i < length; i++) {
+            let current = cats[i];
+            postedCats.innerHTML +=
+                `<div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="${current.img}">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">${current.name}<i class="material-icons right"></i></span>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4"${current.name}<b class="material-icons right">X</b></span>
+                        <p id="bigger">${current.name} is a ${current.breed} cat who is ${current.age} years old!</p>
+                    </div>
+                </div>`
+        }
+    }
+    xhr.send();
+    //    for (let i = 0, length = cats.length; i < length; i++) {
+    //        let current = cats[i];
+    //        postedCats.innerHTML += `<div class="card"><img src=${current.img}></div>`;
+    //    }
+}
+
+const displayLast = () => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', 'getCats');
+    xhr.responseType = 'json';
+    xhr.onload = function () {
+        cats = xhr.response;
+        let current = cats[cats.length - 1];
+        postedCats.innerHTML +=
+            `<div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="${current.img}">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">${current.name}<i class="material-icons right"></i></span>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4"${current.name}<b class="material-icons right">X</b></span>
+                        <p id="bigger">${current.name} is a ${current.breed} cat who is ${current.age} years old!</p>
+                    </div>
+                </div>`
+    }
+    xhr.send();
 }
 
 const sendPost = (e, catForm) => {
@@ -66,12 +107,14 @@ const sendPost = (e, catForm) => {
 }
 
 const init = () => {
+    //cats = JSON.parse(catFile).cats;
     const catForm = document.querySelector('#catForm');
     const postCat = (e) => sendPost(e, catForm);
+    const poster = document.getElementById('poster');
+    console.log(poster);
     catForm.addEventListener('submit', postCat);
-
-
-
+    poster.addEventListener('click', displayLast);
+    displayCats();
 };
 
 window.onload = init;

@@ -1,3 +1,53 @@
 h1 {
     font-size: 24px;
 }
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    width: 25%;
+    float: left;
+    margin: 1em;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.container {
+    padding: 2px 16px;
+}
+
+body {
+    background-color: #448aff;
+}
+
+#allContent {
+    width: 80%;
+    margin: auto;
+    background-color: #e3f2fd;
+    overflow: hidden;
+    position: relative;
+    min-height: 100vh;
+}
+
+input {
+    color: white;
+}
+
+#inputBar {
+    background-color: #bbdefb;
+}
+
+#footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem;
+    color: gray;
+    text-align: center;
+}
+
+#bigger {
+    font-size: 24px;
+}
