@@ -5,6 +5,8 @@ const parseJSON = (xhr, content) => {
     const obj = JSON.parse(xhr.response);
 }
 
+let catCounter = cats.length;
+
 const handleResponse = (xhr) => {
     const content = document.querySelector('#content');
 
@@ -63,9 +65,10 @@ const displayLast = () => {
     xhr.responseType = 'json';
     xhr.onload = function () {
         cats = xhr.response;
-        let current = cats[cats.length - 1];
-        postedCats.innerHTML +=
-            `<div class="card">
+        if (cats.length > catCounter) {
+            let current = cats[cats.length - 1];
+            postedCats.innerHTML +=
+                `<div class="card">
                     <div class="card-image waves-effect waves-block waves-light">
                         <img class="activator" src="${current.img}">
                     </div>
@@ -77,6 +80,8 @@ const displayLast = () => {
                         <p id="bigger">${current.name} is a ${current.breed} cat who is ${current.age} years old!</p>
                     </div>
                 </div>`
+            catCounter++;
+        }
     }
     xhr.send();
 }

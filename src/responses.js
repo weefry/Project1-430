@@ -42,7 +42,7 @@ const getCatsMeta = (request, response) => {
 const postCat = (request, response, body) => {
     let statusCode;
     const responseJSON = {
-        message: 'Breed, name, age, and image url are required',
+        message: 'Breed, name, age, contact info, and image url are required',
     };
     if (!body.name || !body.age || !body.breed || !body.img) {
         statusCode = 400;
@@ -55,11 +55,9 @@ const postCat = (request, response, body) => {
     //if there already is a cat with that name, update it
     if (cats[body.name]) {
         statusCode = 204;
-        console.log(`age: ${body.age}, breed: ${body.breed}, img: ${body.img}`);
         cats[body.name].age = body.age;
         cats[body.name].breed = body.breed;
         cats[body.name].img = body.img;
-        cats[body.name].comments = "I hate this";
 
     } else {
         cats[body.name] = {};
