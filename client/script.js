@@ -1,11 +1,9 @@
 //const fs = require('fs'); //require is not defined
 //import catFile from '../src/responses.js'; //can't find file with this
-let cats;
+let cats, catCounter;
 const parseJSON = (xhr, content) => {
     const obj = JSON.parse(xhr.response);
 }
-
-let catCounter = cats.length;
 
 const handleResponse = (xhr) => {
     const content = document.querySelector('#content');
@@ -35,6 +33,7 @@ const displayCats = () => {
     xhr.responseType = 'json';
     xhr.onload = function () {
         cats = xhr.response;
+        catCounter = cats.length;
         for (let i = 0, length = cats.length; i < length; i++) {
             let current = cats[i];
             postedCats.innerHTML +=
