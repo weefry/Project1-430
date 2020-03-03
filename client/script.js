@@ -1,6 +1,7 @@
 //const fs = require('fs'); //require is not defined
 //import catFile from '../src/responses.js'; //can't find file with this
-let cats, catCounter;
+let cats;
+let catCounter = 0;
 const parseJSON = (xhr, content) => {
     const obj = JSON.parse(xhr.response);
 }
@@ -33,7 +34,6 @@ const displayCats = () => {
     xhr.responseType = 'json';
     xhr.onload = function () {
         cats = xhr.response;
-        catCounter = cats.length;
         for (let i = 0, length = cats.length; i < length; i++) {
             let current = cats[i];
             postedCats.innerHTML +=
@@ -47,8 +47,11 @@ const displayCats = () => {
                     <div class="card-reveal">
                         <span class="card-title grey-text text-darken-4"${current.name}<b class="material-icons right">X</b></span>
                         <p id="bigger">${current.name} is a ${current.breed} cat who is ${current.age} years old!</p>
+                        <br>
+                        <p>Get in contact with Tom's parent(s) here: ${current.contact}</p>
                     </div>
                 </div>`
+            catCounter++;
         }
     }
     xhr.send();
@@ -64,6 +67,7 @@ const displayLast = () => {
     xhr.responseType = 'json';
     xhr.onload = function () {
         cats = xhr.response;
+        console.log(`Cats length: ${cats.length}, catCounter: ${catCounter}`);
         if (cats.length > catCounter) {
             let current = cats[cats.length - 1];
             postedCats.innerHTML +=
@@ -94,6 +98,7 @@ const sendPost = (e, catForm) => {
     const ageField = catForm.querySelector('#ageField');
     const breedField = catForm.querySelector('#breedField');
     const imgField = catForm.querySelector('#imgField');
+    const contactField = catForm.querySelector('#contactField');
 
     const xhr = new XMLHttpRequest();
     xhr.open(nameMethod, nameAction);
@@ -102,10 +107,8 @@ const sendPost = (e, catForm) => {
     xhr.setRequestHeader('Accept', 'application/json');
 
     xhr.onload = () => handleResponse(xhr);
-
-    const formData = `name=${nameField.value}&age=${ageField.value}&breed=${breedField.value}&img=${imgField.value}`;
+    const formData = `name=${nameField.value}&age=${ageField.value}&breed=${breedField.value}&img=${imgField.value}&contact=${contactField.value}`;
     xhr.send(formData);
-
     //don't let it change page
     return false;
 }
@@ -115,7 +118,6 @@ const init = () => {
     const catForm = document.querySelector('#catForm');
     const postCat = (e) => sendPost(e, catForm);
     const poster = document.getElementById('poster');
-    console.log(poster);
     catForm.addEventListener('submit', postCat);
     poster.addEventListener('click', displayLast);
     displayCats();

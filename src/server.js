@@ -14,13 +14,11 @@ const handlePost = (request, response, parsedUrl) => {
         const body = [];
 
         request.on('error', (err) => {
-            console.log("got an error in handlepost");
             console.dir(err);
             res.statusCode = 400;
             res.end();
         });
         request.on('data', (chunk) => {
-            console.log("request thing?: " + chunk);
             body.push(chunk);
         });
 
@@ -58,10 +56,6 @@ const onRequest = (request, response) => {
     const params = query.parse(parsedUrl.query);
 
     const acceptedTypes = request.headers.accept.split(',');
-    console.log(`pathname = ${pathname}`);
-    console.log(`httpMethod = ${httpMethod}`);
-    console.log(`params = ${Object.keys(params)}`);
-
     if (request.method === 'POST') {
         //console.log('in httpeMethod === post');
         handlePost(request, response, parsedUrl);

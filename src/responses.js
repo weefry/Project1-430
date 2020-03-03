@@ -58,6 +58,7 @@ const postCat = (request, response, body) => {
         cats[body.name].age = body.age;
         cats[body.name].breed = body.breed;
         cats[body.name].img = body.img;
+        cats[body.name].contact = body.contact;
 
     } else {
         cats[body.name] = {};
@@ -67,7 +68,7 @@ const postCat = (request, response, body) => {
         cats[body.name].age = body.age;
         cats[body.name].breed = body.breed;
         cats[body.name].img = body.img;
-        cats[body.name].comments = {};
+        cats[body.name].contact = body.contact;
 
         cats.push[body.name];
 
@@ -82,12 +83,9 @@ const postCat = (request, response, body) => {
             age: body.age,
             breed: body.breed,
             img: body.img,
-            comments: {}
+            contact: body.contact,
         });
     }
-
-    const keys = Object.values(cats);
-    console.log(keys);
 
     //send created message that we created new cat
     if (statusCode === 201) {

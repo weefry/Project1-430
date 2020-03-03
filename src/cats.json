@@ -5,18 +5,14 @@
             "age": 5,
             "breed": "Selkirk",
             "img": "https://i.pinimg.com/originals/2f/ee/42/2fee421a1fe2cf13beaf78c7df7d24bc.jpg",
-            "comments": {
-
-            }
+            "contact": "anotherEmail@yahoo.com"
         },
         {
             "name": "Tom",
             "age": 3,
             "breed": "Tabby",
             "img": "https://www.catster.com/wp-content/uploads/2017/11/Mackerel-Tabby-cat.jpg",
-            "comments": {
-
-            }
+            "contact": "randomemail@gmail.com"
         }
 ]
 }
